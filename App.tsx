@@ -9,6 +9,8 @@ import MediaDetails from './Pages/MediaDetails';
 
 const App: React.FC = (): JSX.Element =>  {
 
+//Interface for movieData state 
+
 interface movieDataInterface {
 
   title: string; 
@@ -17,6 +19,9 @@ interface movieDataInterface {
   overview:string
   video: string
   }
+
+  //Interface for tvData state 
+  //Tv shows and movies needed separate states because TMDB returns different data for shows and movies
 
   interface tvDataInterface{
 
@@ -27,6 +32,8 @@ interface movieDataInterface {
     video: string
   }
 
+  //Interface for selected Tv/Movie that helps with carrying data to antoher page via props
+
   interface SelectedMedia{
 
       name: string | undefined
@@ -36,13 +43,14 @@ interface movieDataInterface {
   }
 
  
-  const [filter, setFilter] = useState<string>("tv")
-  const [movieData,setMovieData] = useState<movieDataInterface[]>([])
-  const [tvData,setTvData] = useState<tvDataInterface[]>([])
-  const [selectedData, setSelectedData] = useState<SelectedMedia[]>([])
-  const [searchValue, setSearchValue] = useState<string>("")
+  const [filter, setFilter] = useState<string>("tv") //creating filter state and setting initial filter
+  const [movieData,setMovieData] = useState<movieDataInterface[]>([]) //state that holads info about movies
+  const [tvData,setTvData] = useState<tvDataInterface[]>([]) //state that holads info about TV shows
+  const [selectedData, setSelectedData] = useState<SelectedMedia[]>([]) //state that holads info selected Tv/movie thats gonna be represented in details view
+  const [searchValue, setSearchValue] = useState<string>("") // saving search value from search bar
 
 
+  //Function that sets selected filter, either TV or Movie
 
   const setDataFilter = (event : React.MouseEvent<HTMLElement>) => 
   {
@@ -51,6 +59,11 @@ interface movieDataInterface {
     const filterValue= selectedFilter.value
     setFilter(filterValue)
   }
+
+
+  //Function that gets info about TV/movie that was clicked as HTML datasets
+  //and then updates state of slectedData, so it can be acceses and passed as prop
+  //in <MediaDetails />  component
 
   const seeDetails = (event : React.MouseEvent<HTMLElement>) =>
   {
@@ -69,17 +82,18 @@ interface movieDataInterface {
    }
  
 
+   //Function that updates searchValue state whenever input in search box is changed
 
    const search = (e : React.ChangeEvent<HTMLElement>) => {
 
       const searchVal = e.currentTarget as HTMLInputElement
 
       setSearchValue(searchVal.value) 
-      
-      
-
+    
    }
 
+   //Function that gets TMDB data for 10 most popular TV/Movies 
+   //when page first renders and also on everyy  filter change
 
    const intitialDataFetch = async (filter: string) => {
 
@@ -96,6 +110,8 @@ interface movieDataInterface {
 
    }
 
+   //Function that gets TMDB data chen input in search box is changed
+   //according to keyword form serach bar and to the selected filter
 
    const changeDataFetch = async (filter: string, searchValue:  string) => {
 
@@ -114,7 +130,8 @@ interface movieDataInterface {
    }
 
 
-
+//Funcntion that is called inside useEffect and that determines 
+//is page should be updated only by filter, by searchValue , or both
 
   const fetchData = async (filter: string, searchValue: string) => {
 
@@ -131,15 +148,19 @@ interface movieDataInterface {
     
     }
 
-    
+    //useREf gets pevious value
     const prevVal = useRef(searchValue)
 
     useEffect(() => 
     {
 
-     if(prevVal.current !== searchValue)
+      //if previous value isn't like present value
+      //it means searchValue ahs changed, and search should be performed with 1 second delay
+     
+      if(prevVal.current !== searchValue)
         setTimeout(() => fetchData(filter, searchValue),1000);
-
+      
+        //if searchValue has not changed, there is no delay
      else 
         fetchData(filter, searchValue)
 
@@ -154,6 +175,9 @@ interface movieDataInterface {
     <div className="App">
     
     <Routes>
+
+    //path to details view
+
     <Route path='MediaDetails' 
     element={<MediaDetails 
     title={selectedData.map((d) => (d.name!))} 
