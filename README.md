@@ -6,7 +6,7 @@ Testing the app
 
  I created a demo website that you can visit and test all the functionalities that were required. 
 
-The demo website can be found at this link: <a target="_blank" href='react-movie-test.42web.io'>Here</a>
+The demo website can be found at this link: <a href="http://react-movie-test.42web.io/" target="_blank">Check demo site</a>
 
 
 **NOTE: In the test assignment, there was a requirement that said if a TV/Movie had a trailer, the trailer should be displayed in detail view instead of an image. However, TMDB does not return any data about the TV Show’s trailer at all, as for the movies, it returns only a boolean value for the property ‘video’, but there is still no URL to the video that should be displayed. Therefore, I set it up so it always shows wallpaper in detail view.**
