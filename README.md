@@ -13,6 +13,8 @@ The demo website can be found at this link: [Demo site](http://react-movie-test.
 
 
 If you want to test the app locally, you need to clone down this repository.<Br> You will need node and npm installed globally on your machine.<Br>
+First, you need to create producttion build with this command:<br>
+`npm run build`
 Then, you should run a command to install serve<br>
 `npm install -g serve`<br>
 After that, you should run the following command to serve the build folder on localhost: <br>
