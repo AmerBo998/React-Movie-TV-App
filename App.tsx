@@ -44,9 +44,9 @@ interface movieDataInterface {
 
  
   const [filter, setFilter] = useState<string>("tv") //creating filter state and setting initial filter
-  const [movieData,setMovieData] = useState<movieDataInterface[]>([]) //state that holads info about movies
-  const [tvData,setTvData] = useState<tvDataInterface[]>([]) //state that holads info about TV shows
-  const [selectedData, setSelectedData] = useState<SelectedMedia[]>([]) //state that holads info selected Tv/movie thats gonna be represented in details view
+  const [movieData,setMovieData] = useState<movieDataInterface[]>([]) //state that holds info about movies
+  const [tvData,setTvData] = useState<tvDataInterface[]>([]) //state that holds info about TV shows
+  const [selectedData, setSelectedData] = useState<SelectedMedia[]>([]) //state that holds info selected Tv/movie thats gonna be represented in details view
   const [searchValue, setSearchValue] = useState<string>("") // saving search value from search bar
 
 
@@ -93,7 +93,7 @@ interface movieDataInterface {
    }
 
    //Function that gets TMDB data for 10 most popular TV/Movies 
-   //when page first renders and also on everyy  filter change
+   //when page first renders and also on every  filter change
 
    const intitialDataFetch = async (filter: string) => {
 
@@ -110,8 +110,8 @@ interface movieDataInterface {
 
    }
 
-   //Function that gets TMDB data chen input in search box is changed
-   //according to keyword form serach bar and to the selected filter
+   //Function that gets TMDB data when input in search box is changed
+   //according to keyword form search bar and to the selected filter
 
    const changeDataFetch = async (filter: string, searchValue:  string) => {
 
@@ -131,7 +131,7 @@ interface movieDataInterface {
 
 
 //Funcntion that is called inside useEffect and that determines 
-//is page should be updated only by filter, by searchValue , or both
+//if page should be updated only by filter, by searchValue , or both
 
   const fetchData = async (filter: string, searchValue: string) => {
 
@@ -148,14 +148,14 @@ interface movieDataInterface {
     
     }
 
-    //useREf gets pevious value
+    //useRef gets previous value
     const prevVal = useRef(searchValue)
 
     useEffect(() => 
     {
 
-      //if previous value isn't like present value
-      //it means searchValue ahs changed, and search should be performed with 1 second delay
+      //if previous value isn't same as present value
+      //it means searchValue has changed, and search should be performed with 1 second delay
      
       if(prevVal.current !== searchValue)
         setTimeout(() => fetchData(filter, searchValue),1000);
